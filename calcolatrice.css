@@ -232,21 +232,14 @@ body{
     display: grid;
 }
 
-@media (max-width: 768px) {
-
+@media (max-width: 768px){
     .tavola_periodica{
-        width: 280px;
         display: none;
-
     }
-
 }
-  
-@media (max-width: 480px) {
 
+@media (max-width: 400px){
     .tavola_periodica{
-        width: 280px;
         display: none;
-
     }
 }
