@@ -1,0 +1,234 @@
+body{
+    background-color: rgb(81, 198, 81);
+}
+
+.calcolatrice{
+    height: 680px;
+    width: 500px;
+    background-color: green;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50px;
+    box-shadow: 10px 10px 70px -10px black;
+}  
+
+
+#numeri{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 400%;
+    background-color: rgba(160, 159, 159, 0.663);
+    color: #ffffff;
+    text-align: end;
+    height: 120px;
+    width: 430px;
+    border-radius: 20px;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+    top: 35px;
+    border: none;
+    border-top: solid black;
+    border-left: solid black;
+    
+}
+
+.decimali{
+    height: 30px;
+    width: 300px;
+    position: absolute;
+    left: 8%;
+    top: 26%;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    box-shadow: 0px 0px 10px 1px #000000 inset;
+
+}
+
+
+.tastiera{
+    width: 300px;
+    height: 350px;
+    display:flex;
+    flex-wrap: wrap-reverse;
+    position: absolute;
+    bottom: 20%;
+    left: 8%;
+}
+
+.t{
+    background-color: black;
+    width: 90px;
+    height: 90px;
+    display: inline-block;
+    margin: 3px;
+    border-radius: 50%;
+    color: white;
+    font-size: 250%;
+    font-family: Arial, Helvetica, sans-serif;
+    border: none;
+}
+
+.t:hover{
+    background-color: rgba(27, 27, 27, 0.985);
+}
+.t:active{
+    border: solid rgba(255, 255, 255, 0.23);
+    background-color:transparent;
+}
+
+.zero{
+
+    width: 300px;
+    position: absolute;
+    left: 8%;
+    bottom: 5%;
+}
+
+.operatori{
+    height: 385px;
+    width: 95px;
+    position: absolute;
+    right: 8%;
+    bottom: 5%;
+    display: flex;
+    flex-wrap: wrap-reverse;
+    overflow: scroll;
+}
+
+.operatori ::-webkit-scrollbar{
+    background-color: darkgreen;
+}
+
+#ce{
+    border-radius: 10%;
+    height: 50px;
+    position: absolute;
+    right: 8%;
+    top: 28%;
+}
+
+#nf2{
+    background-color: rgb(91, 91, 91);
+}
+
+.nd_page2,
+.nd_pages{
+    display: none;
+}
+
+.ndd > .nd_page2,
+.nd > .nd_pages{
+    display: block;
+}
+
+/*tavola periodica*/
+.tavola_periodica{
+    width: 280px;
+    position: relative;
+    position: absolute;
+    left: 20%;
+    top: 48%;
+    transform: translate(-50%, -50%);
+}
+
+.titolo{
+    width: 280px;
+    height: 60px;
+    text-align: left;
+    position: relative;
+}
+.tit_tav{
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+}
+
+.informazioni{
+    width: 280px;
+    height: 550px;
+    text-align: center;
+    border-radius: 20px;
+    background-color: rgba(255, 255, 255, 0.169);
+    box-shadow: #ffffff 0px 0px 20px 0px;
+    display: grid;
+    justify-items: center;
+    position: relative;
+}
+
+.tav_button{
+    height: 40px;
+    width: 120px;
+    margin-top: 10px;
+    border-radius: 20px;
+    border: none;
+    background-color: white;
+    box-shadow: #000000 0px 0px 10px 0px inset;
+    font-size: 100%;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+}
+
+
+.tav_button:active{
+    transition: none;
+    font-size: 90%;
+    box-shadow: #ffffff 0px 0px 10px 0px;
+}
+
+#serch_button{
+    margin-bottom: 10px;
+}
+
+.informazioni input{
+    width: 180px;
+    height: 25px;
+    font-size: larger;
+    text-align: center;
+    background-color: rgb(28, 143, 28);
+    box-shadow: #000000 0px 0px 5px 0px inset;
+    color: white;
+    font-weight: bold;
+    border-radius: 10px;
+    border: none;
+
+}
+
+#massa_atomica{
+    margin-bottom: 20px;
+}
+
+.vuoto{
+    width: 280px;
+    height: 420px;
+    text-align: center;
+    border-radius: 20px;
+    display: grid;
+    justify-items: center;
+    position: relative;  
+}
+
+.tav_button{
+    height: 40px;
+    width: 120px;
+    margin-top: 10px;
+    border-radius: 20px;
+    border: none;
+    background-color: white;
+    box-shadow: #000000 0px 0px 10px 0px inset;
+    font-size: 100%;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+}
+
+.vuoto,
+.informazioni{
+    display: none;
+}
+
+.main_info_contenitore_close > .vuoto,
+.main_info_contenitore_open > .informazioni{
+    display: grid;
+}
+

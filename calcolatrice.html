@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html5>
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="calcolatrice.css">
+    </head>
+    <body>
+        <main class="main_generale">
+
+            <div class="calcolatrice">
+                <div class="risultato" id="risultato">
+                    <input type="text" id="numeri" disabled>
+                </div>
+                <div class="decimali">
+                    <label for="range">DECIMALI</label>
+                    <input type="range" class="range" id="slider" min="0" max="10" step="1" value="2" oninput="aggiornaValore(this.value)">
+                    <span id="valore">2</span>
+                </div>
+                
+
+                <div class="tastiera">
+                    
+                    <button class="t" id="t1" data-value="1">1</button>
+                    <button class="t" id="t2" data-value="2">2</button>
+                    <button class="t" id="t3" data-value="3">3</button>
+                    <button class="t" id="t4" data-value="4">4</button>
+                    <button class="t" id="t5" data-value="5">5</button>
+                    <button class="t" id="t6" data-value="6">6</button>
+                    <button class="t" id="t7" data-value="7">7</button>
+                    <button class="t" id="t8" data-value="8">8</button>
+                    <button class="t" id="t9" data-value="9">9</button>
+
+                </div>
+                <div class="zero">
+                    <button class="t" id="dec" data-value="punto">.</button>
+                    <button class="t" id="t0" data-value="0">0</button>
+                    <button class="t" id="t=" data-value="=">=</button>
+                </div>
+                <button class="t" id="ce" data-value="C">ce</button>
+
+                <div class="operatori">
+                    <button class="t" id="piu" data-value="+">+</button>
+                    <button class="t" id="meno" data-value="-">-</button>
+                    <button class="t" id="per" data-value="*">x</button>
+                    <button class="t" id="diviso" data-value="/">÷</button>
+                    <button class="t" id="%" data-value="/100">%</button>
+                    <button class="t" id="transform" data-value="transform">+/-</button>
+                    <button class="t" id="**2" data-value="**2">x^2</button>
+                    <button class="t" id="**3" data-value="**3">x^3</button>
+                    <button class="t" id="**n" data-value="**n">x^n</button>
+                    <button class="t" id="x!" data-value="x">x!</button>
+                    <button class="t" id="rad" data-value="rad">√</button>
+                    <button class="t" id="rad3" data-value="rad3">3√</button>
+                    <button class="t" id="nrad" data-value="nrad">n√</button>
+                    <button class="t" id="π" data-value="π">π</button>
+                    <button class="t" id="e" data-value="e">e</button>
+
+
+                    <main id="main" class="nd">
+                        <div class="nd_pages">
+                            <button class="t" id="nf" data-value="tastonf">2nd</button>
+                            <button class="t" id="sin" data-value="sin">sin</button>
+                            <button class="t" id="cos" data-value="cos">cos</button>
+                            <button class="t" id="tan" data-value="tan">tan</button>
+                        </div>
+                        <div class="nd_page2">
+                            <button class="t" id="nf2" data-value="tastonf2">2nd</button>
+                            <button class="t" id="asin" data-value="asin">asin</button>
+                            <button class="t" id="acos" data-value="acos">acos</button>
+                            <button class="t" id="atan" data-value="atan">atan</button>
+                        </div>
+                    </main>
+
+                    
+                </div>
+            </div>
+
+            <!-- tavola periodica -->
+            <div class="tavola_periodica">
+                <div class="titolo">
+                    <h2 class="tit_tav">TAVOLA_PERIODICA</h2>
+                </div>
+                <main id="main_tavola" class="main_info_contenitore_close">
+                    <div class="informazioni">
+                        <button class="tav_button" id="tav_close" data-value="close">CHIUDI</button>
+                        <h3 class="tit_elemento" >ELEMENTO</h3>
+                        <input type="text" class= "output" id="elemento_completo">
+                        <h3 class="tit_simbolo">SIMBOLO</h3>
+                        <input type="text" class= "output" id="simbolo" disabled>
+                        <h3 class="tit_numero">NUMERO ATOMICO</h3>
+                        <input type="text" class= "output" id="numero_atomico" disabled>
+                        <h3 class="tit_massa">MASSA ATOMICA</h3>
+                        <input type="text" class= "output" id="massa_atomica" disabled>
+                        <h3 id="messaggio">_____________</h3>
+                        <button class="tav_button" onclick="trovaElementoPerNomeCompleto(idrogeno)" id="serch_button">Cerca</button>
+                    </div>
+
+                    <div class="vuoto">
+                        <button class="tav_button" id="tav_open" data-value="open">APRI</button>
+                    </div>
+                </main>
+
+
+            </div>
+            
+
+        </main>
+        
+
+       <script src="calcolatrice.js"></script>
+    </body>
+</html>
