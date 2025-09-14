@@ -1,245 +1,268 @@
-body{
-    background-color: rgb(81, 198, 81);
+/* ===== Reset leggero & base ===== */
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  background-color: rgb(81, 198, 81);
+  -webkit-text-size-adjust: 100%;
 }
 
+/* ===== Layout pagina: calcolatrice centrata, tavola affiancata =====
+   4 colonne: 1fr | CALC | TAV | 1fr
+   → la colonna centrale 2 contiene la calcolatrice, che risulta ESATTAMENTE centrata.
+   → la colonna 3 contiene la tavola, affiancata a destra.
+*/
+.main_generale{
+  min-height: 100svh;
+  display: grid;
+  grid-template-columns: 1fr auto auto 1fr;
+  grid-template-areas: ". calc tav .";
+  align-items: center;   /* centratura verticale del blocco */
+  justify-items: center; /* allinea i contenuti nelle loro celle */
+  gap: 24px;
+  padding: 24px;
+}
+
+/* Stacco minimo dai bordi piccoli */
+@media (max-width: 900px){
+  .main_generale{ gap: 20px; padding: 16px; }
+}
+
+/* Stack verticale su schermi stretti: tavola sotto la calcolatrice */
+@media (max-width: 820px){
+  .main_generale{
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "calc"
+      "tav";
+    gap: 16px;
+  }
+}
+
+/* ===== Calcolatrice (design invariato, niente absolute per il layout) ===== */
 .calcolatrice{
-    height: 680px;
-    width: 500px;
-    background-color: green;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    border-radius: 50px;
-    box-shadow: 10px 10px 70px -10px black;
-}  
+  grid-area: calc;
 
+  /* dimensioni originali */
+  width: 500px;
+  height: 680px;
 
+  position: relative;            /* per posizionare interni se serve */
+  background-color: green;
+  border-radius: 50px;
+  box-shadow: 10px 10px 70px -10px black;
+  padding: 24px;                 /* respiro interno, non cambia look generale */
+  overflow: visible;
+  
+  /* safety: se l’altezza del device è proprio minima, scala leggermente */
+  --safe-w: min(100vw - 32px, 1000px);
+  --safe-h: calc(100svh - 32px);
+  --scale-w: calc(var(--safe-w) / 500);
+  --scale-h: calc(var(--safe-h) / 700); /* 680 + padding */
+  --scale: min(max(0.8, min(var(--scale-w), var(--scale-h))), 1); /* tra 0.8x e 1x */
+  transform: scale(var(--scale));
+  transform-origin: center center;
+}
+
+/* Layout interno con griglia: mantiene disposizioni e proporzioni */
+.calcolatrice{
+  display: grid;
+  grid-template-columns: 1fr 110px;              /* area principale + colonna operatori */
+  grid-template-rows: 130px 45px 1fr 100px;      /* display, decimali, tastiera, zero */
+  grid-template-areas:
+    "display display"
+    "dec     ce"
+    "keys    ops"
+    "zero    ops";
+  column-gap: 14px;
+  row-gap: 12px;
+}
+
+/* DISPLAY (design come prima) */
 #numeri{
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 400%;
-    background-color: rgba(160, 159, 159, 0.663);
-    color: #ffffff;
-    text-align: end;
-    height: 120px;
-    width: 430px;
-    border-radius: 20px;
-    position: absolute;
-    left: 50%;
-    transform: translate(-50%);
-    top: 35px;
-    border: none;
-    border-top: solid black;
-    border-left: solid black;
-    
+  grid-area: display;
+  width: 100%;
+  height: 120px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 400%;
+  background-color: rgba(160, 159, 159, 0.663);
+  color: #ffffff;
+  text-align: end;
+  border: none;
+  border-top: solid black;
+  border-left: solid black;
+  border-radius: 20px;
+  padding: 6px 12px;
 }
 
+/* DECIMALI */
 .decimali{
-    height: 30px;
-    width: 300px;
-    position: absolute;
-    left: 8%;
-    top: 26%;
-    border-radius: 5px;
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    box-shadow: 0px 0px 10px 1px #000000 inset;
-
+  grid-area: dec;
+  width: 100%;
+  height: 30px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  box-shadow: 0 0 10px 1px #000 inset;
+  gap: 8px;
 }
+.decimali label{ font: 600 14px/1 Arial, Helvetica, sans-serif; color: #fff; }
+.decimali .range{ width: 60%; }
+#valore{ color: #fff; font: 600 14px/1 Arial, Helvetica, sans-serif; }
 
-
-.tastiera{
-    width: 300px;
-    height: 350px;
-    display:flex;
-    flex-wrap: wrap-reverse;
-    position: absolute;
-    bottom: 20%;
-    left: 8%;
-}
-
-.t{
-    background-color: black;
-    width: 90px;
-    height: 90px;
-    display: inline-block;
-    margin: 3px;
-    border-radius: 50%;
-    color: white;
-    font-size: 250%;
-    font-family: Arial, Helvetica, sans-serif;
-    border: none;
-}
-
-.t:hover{
-    background-color: rgba(27, 27, 27, 0.985);
-}
-.t:active{
-    border: solid rgba(255, 255, 255, 0.23);
-    background-color:transparent;
-}
-
-.zero{
-
-    width: 300px;
-    position: absolute;
-    left: 8%;
-    bottom: 5%;
-}
-
-.operatori{
-    height: 385px;
-    width: 95px;
-    position: absolute;
-    right: 8%;
-    bottom: 5%;
-    display: flex;
-    flex-wrap: wrap-reverse;
-    overflow: scroll;
-}
-
-.operatori ::-webkit-scrollbar{
-    background-color: darkgreen;
-}
-
+/* CE (in alto a destra, stessa riga dei decimali) */
 #ce{
-    border-radius: 10%;
-    height: 50px;
-    position: absolute;
-    right: 8%;
-    top: 28%;
+  grid-area: ce;
+  justify-self: end;
+  align-self: center;
+  height: 50px;
+  border-radius: 10%;
 }
 
-#nf2{
-    background-color: rgb(91, 91, 91);
+/* TASTIERA numerica */
+.tastiera{
+  grid-area: keys;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-wrap: wrap-reverse;
+  align-content: flex-start;
+  justify-content: flex-start;
+  gap: 6px;
 }
 
-.nd_page2,
-.nd_pages{
-    display: none;
+/* ZERO largo in basso a sinistra */
+.zero{
+  grid-area: zero;
+  width: 100%;
+  display: flex;
+  gap: 6px;
+  justify-content: flex-start;
 }
 
-.ndd > .nd_page2,
-.nd > .nd_pages{
-    display: block;
+/* OPERATORI a destra */
+.operatori{
+  grid-area: ops;
+  width: 95px;
+  height: 100%;
+  display: flex;
+  flex-wrap: wrap-reverse;
+  align-content: flex-start;
+  justify-content: center;
+  gap: 6px;
+  overflow: auto;
 }
+.operatori ::-webkit-scrollbar{ background-color: darkgreen; }
 
-/*tavola periodica*/
+/* Bottoni (design invariato) */
+.t{
+  background-color: black;
+  width: 90px;
+  height: 90px;
+  display: inline-grid;
+  place-items: center;
+  margin: 3px;
+  border-radius: 50%;
+  color: white;
+  font-size: 250%;
+  font-family: Arial, Helvetica, sans-serif;
+  border: none;
+  cursor: pointer;
+}
+.t:hover{ background-color: rgba(27, 27, 27, 0.985); }
+.t:active{
+  border: solid rgba(255, 255, 255, 0.23);
+  background-color: transparent;
+}
+#nf2{ background-color: rgb(91, 91, 91); }
+
+/* Pagine trig (rispetto al tuo HTML) */
+.nd_page2, .nd_pages{ display: none; }
+.ndd > .nd_page2, .nd > .nd_pages{ display: block; }
+
+/* ===== Tavola periodica (design invariato) ===== */
 .tavola_periodica{
-    width: 280px;
-    position: relative;
-    position: absolute;
-    left: 20%;
-    top: 48%;
-    transform: translate(-50%, -50%);
+  grid-area: tav;
+  width: 280px;
+  position: relative;
 }
-
 .titolo{
-    width: 280px;
-    height: 60px;
-    text-align: left;
-    position: relative;
+  width: 280px;
+  height: 60px;
+  text-align: left;
+  position: relative;
 }
 .tit_tav{
-    position: absolute;
-    left: 50%;
-    transform: translate(-50%);
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
 }
-
 .informazioni{
-    width: 280px;
-    height: 550px;
-    text-align: center;
-    border-radius: 20px;
-    background-color: rgba(255, 255, 255, 0.169);
-    box-shadow: #ffffff 0px 0px 20px 0px;
-    display: grid;
-    justify-items: center;
-    position: relative;
+  width: 280px;
+  height: 550px;
+  text-align: center;
+  border-radius: 20px;
+  background-color: rgba(255, 255, 255, 0.169);
+  box-shadow: #ffffff 0 0 20px 0;
+  display: grid;
+  justify-items: center;
+  position: relative;
 }
-
 .tav_button{
-    height: 40px;
-    width: 120px;
-    margin-top: 10px;
-    border-radius: 20px;
-    border: none;
-    background-color: white;
-    box-shadow: #000000 0px 0px 10px 0px inset;
-    font-size: 100%;
-    font-family:Georgia, 'Times New Roman', Times, serif;
+  height: 40px;
+  width: 120px;
+  margin-top: 10px;
+  border-radius: 20px;
+  border: none;
+  background-color: white;
+  box-shadow: #000 0 0 10px 0 inset;
+  font-size: 100%;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  cursor: pointer;
 }
-
-
 .tav_button:active{
-    transition: none;
-    font-size: 90%;
-    box-shadow: #ffffff 0px 0px 10px 0px;
+  transition: none;
+  font-size: 90%;
+  box-shadow: #fff 0 0 10px 0;
 }
-
-#serch_button{
-    margin-bottom: 10px;
-}
-
+#serch_button{ margin-bottom: 10px; }
 .informazioni input{
-    width: 180px;
-    height: 25px;
-    font-size: larger;
-    text-align: center;
-    background-color: rgb(28, 143, 28);
-    box-shadow: #000000 0px 0px 5px 0px inset;
-    color: white;
-    font-weight: bold;
-    border-radius: 10px;
-    border: none;
-
+  width: 180px;
+  height: 25px;
+  font-size: larger;
+  text-align: center;
+  background-color: rgb(28, 143, 28);
+  box-shadow: #000 0 0 5px 0 inset;
+  color: white;
+  font-weight: bold;
+  border-radius: 10px;
+  border: none;
 }
-
-#massa_atomica{
-    margin-bottom: 20px;
-}
+#massa_atomica{ margin-bottom: 20px; }
 
 .vuoto{
-    width: 280px;
-    height: 420px;
-    text-align: center;
-    border-radius: 20px;
-    display: grid;
-    justify-items: center;
-    position: relative;  
+  width: 280px;
+  height: 420px;
+  text-align: center;
+  border-radius: 20px;
+  display: grid;
+  justify-items: center;
+  position: relative;  
 }
-
-.tav_button{
-    height: 40px;
-    width: 120px;
-    margin-top: 10px;
-    border-radius: 20px;
-    border: none;
-    background-color: white;
-    box-shadow: #000000 0px 0px 10px 0px inset;
-    font-size: 100%;
-    font-family:Georgia, 'Times New Roman', Times, serif;
-}
-
-.vuoto,
-.informazioni{
-    display: none;
-}
-
+.vuoto, .informazioni{ display: none; }
 .main_info_contenitore_close > .vuoto,
-.main_info_contenitore_open > .informazioni{
-    display: grid;
+.main_info_contenitore_open > .informazioni{ display: grid; }
+
+/* ===== Responsive refinements ===== */
+
+/* Piccoli schermi: colonna singola, calcolatrice sopra, tavola sotto */
+@media (max-width: 820px){
+  .tavola_periodica{ width: 90%; max-width: 320px; }
 }
 
-@media (max-width: 768px){
-    .tavola_periodica{
-        display: none;
-    }
-}
-
-@media (max-width: 400px){
-    .tavola_periodica{
-        display: none;
-    }
+/* Extra-compact: riduci leggermente i bottoni per evitare overflow quando non basta lo scale */
+@media (max-width: 360px){
+  .t{ width: 78px; height: 78px; font-size: 210%; }
 }
